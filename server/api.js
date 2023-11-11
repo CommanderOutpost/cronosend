@@ -3,10 +3,10 @@ const morgan = require('morgan');
 const errorhandler = require('errorhandler');
 const apiRouter = express.Router();
 
-const usernameRouter = require('./usernameRouter');
+const usersRouter = require('./usersRouter');
 
 apiRouter.use(morgan('dev'));
-apiRouter.use('/username', usernameRouter);
+apiRouter.use('/users', usersRouter);
 
 apiRouter.use(errorhandler(), (err, req, res, next) => {
     if (!err.status) {

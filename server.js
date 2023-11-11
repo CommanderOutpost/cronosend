@@ -9,7 +9,10 @@ const PORT = process.env.PORT || 4001;
 
 app.use('/public', express.static('public'));
 app.get('/', (req, res, next) => {
-    res.sendFile('username.html', { root: __dirname });
+    res.sendFile('pages/username.html', { root: __dirname });
+});
+app.get('/createorjoin', (req, res, next) => {
+    res.sendFile('pages/createorjoin.html', { root: __dirname });
 });
 
 // Middleware for handling CORS requests from index.html
