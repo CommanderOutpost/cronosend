@@ -14,6 +14,13 @@ app.get('/', (req, res, next) => {
 app.get('/createorjoin', (req, res, next) => {
     res.sendFile('pages/createorjoin.html', { root: __dirname });
 });
+app.get('/create', (req, res, next) => {
+    res.sendFile('pages/create.html', { root: __dirname });
+});
+app.get('/join', (req, res, next) => {
+    res.sendFile('pages/join.html', { root: __dirname });
+});
+
 
 // Middleware for handling CORS requests from index.html
 app.use(cors());
