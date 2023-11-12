@@ -1,12 +1,12 @@
 const express = require('express');
-const { addToUsers } = require('../database/usernames');
-const usersRouter = express.Router()
+const { addToUsersDatabase, userExists } = require('../../database/usersDatabase');
+const usersRouter = express.Router();
 
 usersRouter.post('/', (req, res, next) => {
-    const user = req.body.user
+    const user = req.body.user;
     if (user) {
         try {
-            addToUsers(user)
+            addToUsersDatabase(user);
         } catch (error) {
             return next(error);
         }
@@ -16,6 +16,6 @@ usersRouter.post('/', (req, res, next) => {
         error.status = 400;
         next(error);
     }
-})
+});
 
 module.exports = usersRouter;
