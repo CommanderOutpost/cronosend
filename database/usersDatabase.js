@@ -11,8 +11,8 @@ const addToUsersDatabase = (user) => {
         throw error;
     } else {
         users.push(user);
-        console.log(users);
     }
+    console.log(users);
 };
 
 

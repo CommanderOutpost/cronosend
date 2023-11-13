@@ -8,13 +8,16 @@ form.addEventListener('submit', handleCreateForm)
 async function handleCreateForm(e) {
     e.preventDefault();
     const formData = new FormData(form);
-    user['type'] = 'owner';
+    user['type'] = 'creator';
     user['roomOwned'] = formData.get('room-name');
 
     room['roomName'] = formData.get('room-name');
     room['maxUsers'] = formData.get('max-users');
     room['timer'] = formData.get('timer');
     room['roomOwner'] = user.username;
+    room['currentUsersCount'] = 1;
+    room['currentUsers'] = [user.username];
+
     console.log(user, room);
     const userToServer = await sendUserToServer(user);
     const roomToServer = await sendRoomToServer(room);

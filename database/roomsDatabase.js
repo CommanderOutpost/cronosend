@@ -11,8 +11,8 @@ const addToRoomsDatabase = (room) => {
         throw error;
     } else {
         rooms.push(room);
-        console.log(rooms);
     }
+    console.log(rooms);
 };
 
 module.exports = { addToRoomsDatabase };
