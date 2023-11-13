@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/style.css">
+    <script src="../socket.io/socket.io.js"></script>
+    <script src="../public/scripts/room.js"></script>
+    </script>
+    <title>Cronosend</title>
+</head>
+
+<body>
+    <div>
+        <div class="room-name-container">
+            <h1>Room Name: <span id="room-name"></span></h1>
+        </div>
+        <div class="users-count-container">
+            <p><span id="users-count-nominator"></span>/<span id="users-count-denominator"></span> users</p>
+        </div>
+    </div>
+
+    <div class="messages-container">
+        <ul id="messages"></ul>
+    </div>
+
+    <form action="">
+        <label for="chat-input"></label>
+        <input type="text" name="chat-input" id="chat-input" autocomplete="off">
+        <button>Send</button>
+    </form>
+</body>
+
+</html>

@@ -12,7 +12,7 @@ const addToUsersDatabase = (user) => {
     } else {
         users.push(user);
     }
-    console.log(users);
+    // console.log(users);
 };
 
 

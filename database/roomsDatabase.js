@@ -12,7 +12,28 @@ const addToRoomsDatabase = (room) => {
     } else {
         rooms.push(room);
     }
-    console.log(rooms);
+    // console.log(rooms);
 };
 
-module.exports = { addToRoomsDatabase };
+const getRoomFromDatabase = (roomName) => {
+    let roomFound = null;
+
+    for (let i = 0; i < rooms.length; i++) {
+        const element = rooms[i];
+        if (element.roomName === roomName) {
+            roomFound = element;
+        }
+    }
+
+    if (!roomFound) {
+        const error = new Error('No room found');
+        error.status = 404;
+        throw error;
+    }
+
+    // console.log(roomFound);
+
+    return roomFound;
+}
+
+module.exports = { addToRoomsDatabase, getRoomFromDatabase };

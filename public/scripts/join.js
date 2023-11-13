@@ -12,7 +12,7 @@ async function handleJoinForm(e) {
 
     console.log(user);
     const userToServer = await sendUserToServer(user);
-    // window.location.href = '/room';
+    window.location.href = '/room';
 }
 
 async function sendUserToServer(newUser) {

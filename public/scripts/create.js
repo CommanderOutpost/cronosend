@@ -21,7 +21,12 @@ async function handleCreateForm(e) {
     console.log(user, room);
     const userToServer = await sendUserToServer(user);
     const roomToServer = await sendRoomToServer(room);
-    // window.location.href = '/room';
+    if (!(roomToServer instanceof Error)) {
+        localStorage.setItem('roomName', room.roomName);
+        window.location.href = '/room';
+    } else {
+        console.log(roomToServer);
+    }
 }
 
 async function sendUserToServer(newUser) {
@@ -40,7 +45,7 @@ async function sendUserToServer(newUser) {
 
         throw new Error('Response failed!');
     } catch (error) {
-        console.error(error);
+        return error;
     }
 }
 
@@ -60,6 +65,6 @@ async function sendRoomToServer(newRoom) {
 
         throw new Error('Response failed!');
     } catch (error) {
-        console.error(error);
+        return error;
     }
 }
