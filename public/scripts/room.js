@@ -1,4 +1,3 @@
-const socket = io();
 const roomName = document.querySelector('#room-name');
 const userCountNominator = document.querySelector('#users-count-nominator');
 const userCountDenominator = document.querySelector('#users-count-denominator');
