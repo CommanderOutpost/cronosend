@@ -10,7 +10,7 @@ roomsRouter.post('/', (req, res, next) => {
         } catch (error) {
             return next(error);
         }
-        res.json({ message: 'Room added' });
+        res.send(room);
     } else {
         const error = new Error('Room does not exist in request body');
         error.status = 400;

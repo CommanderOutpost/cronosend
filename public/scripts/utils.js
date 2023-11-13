@@ -12,8 +12,8 @@ async function sendUserToServer(newUser) {
             return await response.json();
         }
 
-        throw new Error('Response failed!');
+        throw new Error('Request failed!');
     } catch (error) {
-        console.error(error);
+        return error;
     }
 }

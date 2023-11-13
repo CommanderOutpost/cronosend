@@ -9,14 +9,25 @@ async function handleJoinForm(e) {
     const formData = new FormData(form);
     user['type'] = 'joiner';
     user['roomJoined'] = formData.get('room-name');
+    console.log(user);
 
     const userToServer = await sendUserToServer(user);
-    const updatedRoom = await updateRoom('join');
-    localStorage.setItem('roomName', formData.get('room-name'));
-    window.location.href = '/room';
+    if (!(userToServer instanceof Error)) {
+        const updatedRoom = await updateRoom('join', user);
+        if (!(updatedRoom instanceof Error)) {
+            localStorage.setItem('roomName', updatedRoom.roomName);
+            window.location.href = '/room';
+        } else {
+            console.log(updatedRoom);
+        }
+    } else {
+        console.log(userToServer)
+    }
 }
 
-async function updateRoom(action) {
+console.log(user);
+
+async function updateRoom(action, user) {
     try {
         const response = await fetch(`api/rooms?action=${action}`, {
             method: 'PUT',

@@ -38,18 +38,19 @@ const getRoomFromDatabase = (roomName) => {
 
 const updateRoomInDatabase = (action, requestBody) => {
     const roomName = requestBody.roomJoined;
-    const username = requestBody.roomName;
+    const username = requestBody.username;
+    console.log(username);
 
     if (action === 'join') {
         for (let i = 0; i < rooms.length; i++) {
             const element = rooms[i];
             if (element.roomName === roomName) {
-                if (element.maxUsers === element.currentUsersCount) {
+                if (Number(element.maxUsers) === Number(element.currentUsersCount)) {
                     const error = new Error('Room limit reached');
                     error.status = 409;
                     throw error;
                 } else {
-                    element.currentUsersCount += 1;
+                    element.currentUsersCount = Number(element.currentUsersCount) + 1
                     element.currentUsers.push(username);
                     return element;
                 }
@@ -62,4 +63,4 @@ const updateRoomInDatabase = (action, requestBody) => {
     throw error;
 }
 
-module.exports = { addToRoomsDatabase, getRoomFromDatabase, updateRoomInDatabase };
+module.exports = { addToRoomsDatabase, getRoomFromDatabase, updateRoomInDatabase, rooms };

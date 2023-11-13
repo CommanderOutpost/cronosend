@@ -1,18 +1,21 @@
+const { rooms } = require("./roomsDatabase");
+
 const users = [];
 
 const addToUsersDatabase = (user) => {
-    const userExists = users.some(existingUser => {
-        return existingUser.username === user.username
-    });
 
-    if (userExists) {
-        const error = new Error('User already exists');
-        error.status = 409;
-        throw error;
-    } else {
-        users.push(user);
+    for (let i = 0; i < rooms.length; i++) {
+        const element = rooms[i];
+        console.log(element.currentUsers);
+        if (element.currentUsers.includes(user.username)) {
+            const error = new Error('User already exists in room');
+            error.status = 409;
+            throw error;
+        } else {
+            users.push(user);
+            break;
+        }
     }
-    // console.log(users);
 };
 
 
