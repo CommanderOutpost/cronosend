@@ -18,7 +18,6 @@ async function handleCreateForm(e) {
     room['currentUsersCount'] = 1;
     room['currentUsers'] = [user.username];
 
-    console.log(user, room);
     const userToServer = await sendUserToServer(user);
     const roomToServer = await sendRoomToServer(room);
     if (!(roomToServer instanceof Error)) {
@@ -26,26 +25,6 @@ async function handleCreateForm(e) {
         window.location.href = '/room';
     } else {
         console.log(roomToServer);
-    }
-}
-
-async function sendUserToServer(newUser) {
-    try {
-        const response = await fetch('api/users', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ user: newUser })
-        })
-
-        if (response.ok) {
-            return await response.json();
-        }
-
-        throw new Error('Response failed!');
-    } catch (error) {
-        return error;
     }
 }
 

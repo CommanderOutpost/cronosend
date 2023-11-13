@@ -1,5 +1,5 @@
 const express = require('express');
-const { addToRoomsDatabase, getRoomFromDatabase } = require('../../database/roomsDatabase');
+const { addToRoomsDatabase, getRoomFromDatabase, updateRoomInDatabase } = require('../../database/roomsDatabase');
 const roomsRouter = express.Router()
 
 roomsRouter.post('/', (req, res, next) => {
@@ -27,6 +27,22 @@ roomsRouter.get('/', (req, res, next) => {
         } catch (error) {
             return next(error);
         }
+    }
+});
+
+roomsRouter.put('/', (req, res, next) => {
+    const action = req.query.action;
+    if (action) {
+        try {
+            const updatedRoom = updateRoomInDatabase('join', req.body);
+            res.send(updatedRoom);
+        } catch (error) {
+            return next(error);
+        }
+    } else {
+        const error = new Error('No action specified');
+        error.status = 400;
+        next(error);
     }
 });
 

@@ -1,11 +1,12 @@
 const express = require('express');
 const { createServer } = require('node:http');
+const { Server } = require('socket.io');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const app = express();
 
+const app = express();
 const server = createServer(app);
-const io = require('./server/socket');
+const io = new Server(server);
 
 module.exports = app;
 
@@ -32,6 +33,9 @@ app.get('/join', (req, res, next) => {
 app.get('/room', (req, res, next) => {
     io.on('connection', (socket) => {
         console.log('a user connected');
+        socket.on('disconnect', () => {
+            console.log('user disconnected');
+        });
     });
     res.sendFile('pages/room.html', { root: __dirname });
 });

@@ -36,4 +36,30 @@ const getRoomFromDatabase = (roomName) => {
     return roomFound;
 }
 
-module.exports = { addToRoomsDatabase, getRoomFromDatabase };
+const updateRoomInDatabase = (action, requestBody) => {
+    const roomName = requestBody.roomJoined;
+    const username = requestBody.roomName;
+
+    if (action === 'join') {
+        for (let i = 0; i < rooms.length; i++) {
+            const element = rooms[i];
+            if (element.roomName === roomName) {
+                if (element.maxUsers === element.currentUsersCount) {
+                    const error = new Error('Room limit reached');
+                    error.status = 409;
+                    throw error;
+                } else {
+                    element.currentUsersCount += 1;
+                    element.currentUsers.push(username);
+                    return element;
+                }
+            }
+        }
+    }
+
+    const error = new Error('No room found');
+    error.status = 404;
+    throw error;
+}
+
+module.exports = { addToRoomsDatabase, getRoomFromDatabase, updateRoomInDatabase };

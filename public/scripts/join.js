@@ -10,27 +10,28 @@ async function handleJoinForm(e) {
     user['type'] = 'joiner';
     user['roomJoined'] = formData.get('room-name');
 
-    console.log(user);
     const userToServer = await sendUserToServer(user);
+    const updatedRoom = await updateRoom('join');
+    localStorage.setItem('roomName', formData.get('room-name'));
     window.location.href = '/room';
 }
 
-async function sendUserToServer(newUser) {
+async function updateRoom(action) {
     try {
-        const response = await fetch('api/users', {
-            method: 'POST',
+        const response = await fetch(`api/rooms?action=${action}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ user: newUser })
-        })
-
+            body: JSON.stringify({ username: user.username, roomJoined: user.roomJoined })
+        });
         if (response.ok) {
-            return await response.json();
+            const responseJson = await response.json();
+            return responseJson;
         }
 
-        throw new Error('Response failed!');
+        throw new Error('Request failed!');
     } catch (error) {
-        console.error(error);
+        return error;
     }
 }
