@@ -31,12 +31,13 @@ app.get('/join', (req, res, next) => {
 });
 
 app.get('/room', (req, res, next) => {
-    io.on('connection', (socket) => {
-        socket.on('chat message', (msg) => {
-            io.emit('chat message', msg);
-        });
-    });
     res.sendFile('pages/room.html', { root: __dirname });
+});
+
+io.on('connection', (socket) => {
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg);
+    });
 });
 
 // Middleware for handling CORS requests from index.html
