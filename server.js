@@ -32,9 +32,8 @@ app.get('/join', (req, res, next) => {
 
 app.get('/room', (req, res, next) => {
     io.on('connection', (socket) => {
-        console.log('a user connected');
-        socket.on('disconnect', () => {
-            console.log('user disconnected');
+        socket.on('chat message', (msg) => {
+            io.emit('chat message', msg);
         });
     });
     res.sendFile('pages/room.html', { root: __dirname });
