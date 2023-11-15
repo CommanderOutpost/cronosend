@@ -35,8 +35,14 @@ app.get('/room', (req, res, next) => {
 });
 
 io.on('connection', (socket) => {
+    socket.on('join', (roomname) => {
+        console.log('Joined: ', roomname);
+        socket.join(roomname)
+    })
+    
     socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
+        const roomname = msg.roomname;
+        io.to(roomname).emit('chat message', msg);
     });
 });
 
