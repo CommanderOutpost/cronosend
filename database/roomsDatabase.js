@@ -39,7 +39,6 @@ const getRoomFromDatabase = (roomName) => {
 const updateRoomInDatabase = (action, requestBody) => {
     const roomName = requestBody.roomJoined;
     const username = requestBody.username;
-    console.log(username);
 
     if (action === 'join') {
         for (let i = 0; i < rooms.length; i++) {
