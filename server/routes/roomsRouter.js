@@ -30,6 +30,18 @@ roomsRouter.get('/', (req, res, next) => {
     }
 });
 
+roomsRouter.get('/messages', (req, res, next) => {
+    const roomName = req.query.roomname;
+    if (roomName) {
+        try {
+            const room = getRoomFromDatabase(roomName);
+            res.send({ messages: room.messages });
+        } catch (error) {
+            return next(error);
+        }
+    }
+});
+
 roomsRouter.put('/', (req, res, next) => {
     const action = req.query.action;
     if (action) {

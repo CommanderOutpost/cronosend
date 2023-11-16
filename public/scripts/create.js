@@ -17,6 +17,7 @@ async function handleCreateForm(e) {
     room['roomOwner'] = user.username;
     room['currentUsersCount'] = 1;
     room['currentUsers'] = [user.username];
+    room['messages'] = [];
 
     const userToServer = await sendUserToServer(user);
     const roomToServer = await sendRoomToServer(room);

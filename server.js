@@ -39,10 +39,13 @@ io.on('connection', (socket) => {
         console.log('Joined: ', roomname);
         socket.join(roomname)
     })
-    
+
     socket.on('chat message', (msg) => {
         const roomname = msg.roomname;
         io.to(roomname).emit('chat message', msg);
+        const room = getRoomFromDatabase(roomname);
+        room.messages.push(msg);
+        console.log(room);
     });
 });
 
@@ -56,6 +59,7 @@ app.use(bodyParser.json());
 
 // Mounting existing apiRouter below at the '/api' path.
 const apiRouter = require('./server/api');
+const { getRoomFromDatabase } = require('./database/roomsDatabase');
 app.use('/api', apiRouter);
 
 
