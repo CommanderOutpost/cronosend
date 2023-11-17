@@ -24,6 +24,45 @@ const getAllMessages = async () => {
     }
 }
 
+let typingTimeout;
+let typingMessage; // Store the typing message element
+
+input.addEventListener('input', () => {
+    // Emit typing event when the user starts typing
+    socket.emit('typing', user.username);
+
+    // Clear any previous typing timeout
+    clearTimeout(typingTimeout);
+
+    // Set a new timeout to remove the "typing" message
+    typingTimeout = setTimeout(() => {
+        socket.emit('stoppedTyping', user.username);
+    }, 1000);
+});
+
+socket.on('typing', (username) => {
+    // Display or update the "typing" message
+    if (username !== user.username) {
+        if (!typingMessage) {
+            // Create a new message if none exists
+            typingMessage = document.createElement('li');
+            messages.appendChild(typingMessage);
+        }
+
+        typingMessage.innerHTML = `${username} is typing...`;
+
+        // You can also update a timestamp or add other logic here
+    }
+});
+
+socket.on('stoppedTyping', (username) => {
+    // Remove the "typing" message when the user stops typing
+    if (typingMessage && typingMessage.innerHTML.startsWith(`${username} is typing...`)) {
+        typingMessage.remove();
+        typingMessage = null; // Reset the typingMessage variable
+    }
+});
+
 // Function to render all messages on the page
 const renderMessages = async () => {
     try {
@@ -65,6 +104,7 @@ function addMessageToPage(msg) {
     // Scroll to the bottom of the messages container
     window.scrollTo(0, document.body.scrollHeight);
 }
+
 
 // Emit a 'join' event to the server when the user joins the room
 socket.emit('join', roomName);

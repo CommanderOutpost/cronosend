@@ -48,6 +48,14 @@ io.on('connection', (socket) => {
         socket.join(roomname);
     });
 
+    socket.on('typing', (username) => {
+        io.emit('typing', username);
+    })
+
+    socket.on('stoppedTyping', (username) => {
+        io.emit('stoppedTyping', username);
+    })
+
     socket.on('chat message', (msg) => {
         const roomname = msg.roomname;
         io.to(roomname).emit('chat message', msg);
