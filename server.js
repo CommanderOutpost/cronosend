@@ -36,7 +36,6 @@ app.get('/room', (req, res, next) => {
 
 io.on('connection', (socket) => {
     socket.on('join', (roomname) => {
-        console.log('Joined: ', roomname);
         socket.join(roomname)
     })
 
@@ -45,7 +44,9 @@ io.on('connection', (socket) => {
         io.to(roomname).emit('chat message', msg);
         const room = getRoomFromDatabase(roomname);
         room.messages.push(msg);
-        console.log(room);
+        setTimeout(() => {
+            room.messages.shift();
+        }, room.timer * 1000);
     });
 });
 
