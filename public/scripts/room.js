@@ -3,6 +3,8 @@ const userCountNominator = document.querySelector('#users-count-nominator');
 const userCountDenominator = document.querySelector('#users-count-denominator');
 const usersDropdown = document.querySelector('#dropdown');
 const roomName = localStorage.getItem('roomName');
+let roomJson = null;
+
 
 const getRoomDetails = async () => {
     try {
@@ -19,17 +21,21 @@ const getRoomDetails = async () => {
 }
 
 const setRoomDetails = async () => {
-    const roomJson = await getRoomDetails();
+    roomJson = await getRoomDetails();
     roomNameElement.innerHTML = roomJson.roomName;
     userCountNominator.innerHTML = roomJson.currentUsersCount;
     userCountDenominator.innerHTML = roomJson.maxUsers;
     for (let i = 0; i < roomJson.currentUsers.length; i++) {
         const element = roomJson.currentUsers[i];
-        const dropdownUser = document.createElement('option');
-        dropdownUser.value = element;
-        dropdownUser.innerHTML = element;
-        usersDropdown.appendChild(dropdownUser);
+        if (!usersDropdown.querySelector(`option[value="${element}"]`)) {
+            const dropdownUser = document.createElement('option');
+            dropdownUser.value = element;
+            dropdownUser.innerHTML = element;
+            usersDropdown.appendChild(dropdownUser);
+        }
     }
 }
 
 setRoomDetails();
+
+setInterval(setRoomDetails, 5000);

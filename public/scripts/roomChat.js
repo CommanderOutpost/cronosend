@@ -34,9 +34,10 @@ const renderMessages = async () => {
 
 renderMessages();
 
+
 function addMessageToPage(msg) {
     const item = document.createElement('li');
-    console.log()
+
     if (user.username === msg.sender) {
         item.textContent = `You: ${msg.message}`;
     } else {
@@ -44,6 +45,10 @@ function addMessageToPage(msg) {
     }
 
     messages.appendChild(item);
+    setTimeout(() => {
+        messages.removeChild(item);
+    }, roomJson.timer * 1000);
+
     window.scrollTo(0, document.body.scrollHeight);
 }
 
