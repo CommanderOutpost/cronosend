@@ -18,6 +18,7 @@ async function handleJoinForm(e) {
     // Set user type and room joined in the user object
     user['type'] = 'joiner';
     user['roomJoined'] = formData.get('room-name');
+    user['timeJoined'] = new Date();
     console.log(user);
 
     // Send user data to the server

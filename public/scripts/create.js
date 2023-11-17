@@ -30,6 +30,7 @@ async function handleCreateForm(e) {
     room['currentUsersCount'] = 1;
     room['currentUsers'] = [user.username];
     room['messages'] = [];
+    room['timeCreated'] = new Date();
 
     // Send user and room data to the server
     const userToServer = await sendUserToServer(user);
