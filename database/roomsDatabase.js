@@ -1,6 +1,17 @@
 // Array to store rooms
 const rooms = [];
 
+
+const findRoomByName = (name) => {
+    for (let i = 0; i < rooms.length; i++) {
+        const element = rooms[i];
+        if (element.roomName === name) {
+            return { room: element, index: i };
+        }
+    }
+    return -1;
+}
+
 // Function to add a room to the rooms array
 const addToRoomsDatabase = (room) => {
     // Check if a room with the same name already exists
@@ -80,5 +91,16 @@ const updateRoomInDatabase = (action, requestBody) => {
     throw error;
 };
 
+const deleteRoomInDatabase = (roomname) => {
+    const room = findRoomByName(roomname);
+    const roomIndex = room.index;
+    if (roomIndex !== -1) {
+        return rooms.splice(roomIndex, 1);
+    }
+    const error = new Error('No room found');
+    error.status = 404;
+    throw error;
+}
+
 // Export the functions and the rooms array
-module.exports = { addToRoomsDatabase, getRoomFromDatabase, updateRoomInDatabase, rooms };
+module.exports = { addToRoomsDatabase, getRoomFromDatabase, updateRoomInDatabase, deleteRoomInDatabase, rooms };

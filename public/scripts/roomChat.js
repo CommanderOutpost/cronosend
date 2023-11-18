@@ -127,3 +127,36 @@ socket.on('chat message', (msg) => {
     // Add the received message to the page
     addMessageToPage(msg);
 });
+
+const addDeleteListener = async () => {
+
+    roomJson = await getRoomDetails();
+    if (roomJson.roomOwner === user.username) {
+        deleteRoomButton.style.display = 'block';
+        deleteRoomButton.addEventListener('click', () => {
+            deleteRoom();
+            socket.emit('delete', user.username);
+            window.location.href = '/createorjoin';
+        });
+    }
+};
+
+addDeleteListener();
+
+socket.on('delete', (username) => {
+    window.location.href = '/createorjoin';
+})
+
+const addCheckUserListener = async () => {
+    roomJson = await getRoomDetails();
+    const checkUserButton = document.querySelector('#check-user-button');
+    if (roomJson.roomOwner === user.username) {
+        checkUserButton.style.display = 'block';
+        checkUserButton.addEventListener('click', () => {
+
+        })
+    }
+    
+}
+
+// addCheckUserListener();

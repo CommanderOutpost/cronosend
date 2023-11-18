@@ -56,6 +56,10 @@ io.on('connection', (socket) => {
         io.emit('stoppedTyping', username);
     })
 
+    socket.on('delete', (username) => {
+        io.emit('delete', username);
+    })
+
     socket.on('chat message', (msg) => {
         const roomname = msg.roomname;
         io.to(roomname).emit('chat message', msg);

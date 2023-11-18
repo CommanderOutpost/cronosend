@@ -3,6 +3,7 @@ const roomNameElement = document.querySelector('#room-name');
 const userCountNominator = document.querySelector('#users-count-nominator');
 const userCountDenominator = document.querySelector('#users-count-denominator');
 const usersDropdown = document.querySelector('#dropdown');
+const deleteRoomButton = document.querySelector('#delete-room-button');
 
 // Retrieve room name from local storage
 const roomName = localStorage.getItem('roomName');
@@ -34,7 +35,7 @@ const getRoomDetails = async () => {
 const setRoomDetails = async () => {
     // Call the getRoomDetails function to fetch the latest room details
     roomJson = await getRoomDetails();
-
+    console.log(roomJson);
     // Update UI elements with the fetched room details
     roomNameElement.innerHTML = roomJson.roomName;
     userCountNominator.innerHTML = roomJson.currentUsersCount;
@@ -54,8 +55,24 @@ const setRoomDetails = async () => {
     }
 }
 
+const deleteRoom = async () => {
+    console.log(roomName);
+    try {
+        const response = await fetch(`/api/rooms?roomname=${roomName}`, {
+            method: 'DELETE'
+        })
+        if (response.ok) {
+            const responseJson = await response.json();
+            return responseJson;
+        }
+    } catch (error) {
+        return error;
+    }
+}
+
+
 // Call setRoomDetails initially to set up the UI
 setRoomDetails();
 
 // Use setInterval to periodically update the room details
-setInterval(setRoomDetails, 2000);
+// setInterval(setRoomDetails, 2000);

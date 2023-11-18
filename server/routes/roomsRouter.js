@@ -2,7 +2,7 @@
 const express = require('express');
 
 // Import functions from the roomsDatabase module
-const { addToRoomsDatabase, getRoomFromDatabase, updateRoomInDatabase } = require('../../database/roomsDatabase');
+const { addToRoomsDatabase, getRoomFromDatabase, updateRoomInDatabase, deleteRoomInDatabase } = require('../../database/roomsDatabase');
 
 // Create an instance of an Express Router
 const roomsRouter = express.Router();
@@ -47,6 +47,10 @@ roomsRouter.get('/', (req, res, next) => {
             // If an error occurs during database operation, pass it to the error handling middleware
             return next(error);
         }
+    } else {
+        const error = new Error('Roomname not specified');
+        error.status = 400;
+        next(error);
     }
 });
 
@@ -90,6 +94,18 @@ roomsRouter.put('/', (req, res, next) => {
         next(error);
     }
 });
+
+roomsRouter.delete('/', (req, res, next) => {
+    const roomName = req.query.roomname;
+    if (roomName) {
+        const deleteRoom = deleteRoomInDatabase(roomName);
+        res.sendStatus(204);
+    } else {
+        const error = new Error('Roomname not specified');
+        error.status = 400;
+        next(error);
+    }
+})
 
 // Export the configured roomsRouter
 module.exports = roomsRouter;
