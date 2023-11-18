@@ -23,6 +23,10 @@ app.use('/public', express.static('public'));
 
 // Define routes to serve HTML pages
 app.get('/', (req, res, next) => {
+    res.sendFile('pages/home.html', { root: __dirname });
+});
+
+app.get('/username', (req, res, next) => {
     res.sendFile('pages/username.html', { root: __dirname });
 });
 
