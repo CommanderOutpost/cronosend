@@ -75,4 +75,4 @@ const deleteRoom = async () => {
 setRoomDetails();
 
 // Use setInterval to periodically update the room details
-// setInterval(setRoomDetails, 2000);
+setInterval(setRoomDetails, 2000);

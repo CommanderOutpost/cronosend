@@ -131,7 +131,9 @@ socket.on('chat message', (msg) => {
 const addDeleteListener = async () => {
 
     roomJson = await getRoomDetails();
+    console.log(roomJson.roomOwner, user.username);
     if (roomJson.roomOwner === user.username) {
+        console.log(deleteRoomButton.style.display);
         deleteRoomButton.style.display = 'block';
         deleteRoomButton.addEventListener('click', () => {
             deleteRoom();
@@ -159,4 +161,4 @@ const addCheckUserListener = async () => {
     
 }
 
-// addCheckUserListener();
+addCheckUserListener();
