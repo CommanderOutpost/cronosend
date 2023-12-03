@@ -4,7 +4,7 @@ This is a messaging web app that allows you to set the time messages remain in a
 
 # How to use
 
-- Go to (Cronosend web app)[https://cronosend.onrender.com/]
+- Go to [Cronosend web app](https://cronosend.onrender.com/)
 - Click on start
 - Input your username
 - Choose to either create or join a room:
